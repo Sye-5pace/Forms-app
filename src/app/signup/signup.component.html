@@ -2,15 +2,35 @@
   <img src="../../assets/movie.png" alt="movie-logo" class="w-8 h-[1.625rem] self-center"/>
   <section class="rounded-[1.5rem] w-[24rem]  bg-[#161D2F] flex flex-col p-8 justify-center gap-y-[2.5rem]">
     <h2 class="text-[2rem] font-light tracking-tighter text-white">Sign Up</h2>
-    <form class="flex flex-col gap-y-[2.5rem]">
-      <div  class="flex flex-col gap-y-[1.25rem]">
-        <input type="text" name="email" required placeholder="Email Address" class="text-white bg-[#161d2f] h-[2.3125rem] bg-none focus:outline-none pl-4 pb-6 placeholder:text-[0.9375rem] placeholder:font-light placeholder:text-opacity-50 border-b  border-[#5a698f] w-[21rem]"/>
-        <input type="password" name="password"  name="password" required placeholder="Password" class="text-white bg-[#161d2f] pl-4 pb-6 h-[2.3125rem] focus:outline-none  placeholder:text-[0.9375rem] placeholder:font-light placeholder:text-opacity-50 border-b  border-[#5a698f] w-[21rem]">
-        <input type="password" name="password"  name="confirm" required placeholder="Repeat password" class="text-white bg-[#161d2f] pl-4 pb-6 h-[2.3125rem] focus:outline-none  placeholder:text-[0.9375rem] placeholder:font-light placeholder:text-opacity-50 border-b  border-[#5a698f] w-[21rem]">
+    <form class="flex flex-col gap-y-[2.5rem]" #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm)">
+      <div class="flex flex-col gap-y-[1.25rem]">
+        <input type="text" name="email" required [(ngModel)]="email" #emailField="ngModel" placeholder="Email Address"
+          class="text-white bg-[#161d2f] h-[2.3125rem] bg-none focus:outline-none pl-4 pb-6 placeholder:text-[0.9375rem] placeholder:font-light placeholder:text-opacity-50 border-b  border-[#5a698f] w-[21rem]" />
+        <div *ngIf="emailField.touched && emailField.invalid" class="text-[#fc4747] font-light text-[0.9375rem]">
+          Please enter a valid email address.
+        </div>
+
+        <input type="password" name="password" required [(ngModel)]="password" #passwordField="ngModel" placeholder="Password"
+          class="text-white bg-[#161d2f] pl-4 pb-6 h-[2.3125rem] focus:outline-none placeholder:text-[0.9375rem] placeholder:font-light placeholder:text-opacity-50 border-b  border-[#5a698f] w-[21rem]" />
+        <div *ngIf="passwordField.touched && passwordField.invalid" class="text-[#fc4747] font-light text-[0.9375rem]">
+          Password is required.
+        </div>
+
+        <input type="password" name="confirm" required [(ngModel)]="confirmPassword" #confirmPasswordField="ngModel" placeholder="Repeat password"
+          class="text-white bg-[#161d2f] pl-4 pb-6 h-[2.3125rem] focus:outline-none placeholder:text-[0.9375rem] placeholder:font-light placeholder:text-opacity-50 border-b  border-[#5a698f] w-[21rem]" />
+        <div *ngIf="confirmPasswordField.touched && confirmPasswordField.invalid" class="text-[#fc4747] font-light text-[0.9375rem]">
+          Please confirm your password.
+        </div>
+        <div *ngIf="password !== confirmPassword" class="text-[#fc4747] font-light text-[0.9375rem]">
+          Passwords do not match.
+        </div>
       </div>
+
       <div class="flex flex-col gap-y-4 items-center">
-        <button type="submit" class="bg-[#fc4747] rounded-[0.375rem] w-full h-[3rem] text-center font-light text-[0.9375rem] text-[#fff] hover:text-[#161D2F] hover:bg-white transition">Create an account</button>
-        <p class="font-light text-[0.9375rem] text-white">Already have an account?  <span   class="text-[#FC4747] cursor-pointer"><a routerLink="/">Login</a></span></p>
+        <button type="submit" [disabled]="signupForm.invalid" class="bg-[#fc4747] rounded-[0.375rem] w-full h-[3rem] text-center font-light text-[0.9375rem] text-[#fff] hover:text-[#161D2F] hover:bg-white transition">
+          Create an account
+        </button>
+        <p class="font-light text-[0.9375rem] text-white">Already have an account? <span class="text-[#FC4747] cursor-pointer"><a routerLink="/">Login</a></span></p>
       </div>
     </form>
   </section>
